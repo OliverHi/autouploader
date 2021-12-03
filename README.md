@@ -23,13 +23,16 @@ user = user
 pass = some_random_encrypted_password
 ```
 
-Now we can actually download this script and install it as a service.
+Now we can actually download this script and install it as a service. You will need a user to run this script as. In my example I am using the user `scanner` here and in the .service file.
 ```
 # clone this repository locally
 sudo git clone https://github.com/OliverHi/autouploader.git /opt/autouploader
 
 # copy your rclone config
 sudo cp ~/.config/rclone/rclone.conf /opt/autouploader/rclone.conf
+
+# and update the user rights
+sudo chown scanner /opt/autouploader/rclone.conf
 
 # then install this script as a background service
 sudo ln -s /opt/autouploader/autouploader.service /etc/systemd/system/autouploader.service
@@ -47,8 +50,8 @@ sudo systemctl start autouploader.service
 # check and make sure the startup worked
 sudo systemctl status autouploader.service
 
-# also check
-tail -f /var/log/scan-uploader.log
+# to follow all the logs use
+journalctl -u autouploader.service -f
 ```
 
 If everything is running fine you can now put files in the watched folder and they should automatically be moved to your Nextcloud instance.

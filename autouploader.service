@@ -11,7 +11,7 @@ WorkingDirectory=/opt/autouploader/
 ExecStart=/bin/sh /opt/autouploader/autoupload.sh
 Restart=always
 RestartSec=3
-StandardOutput=null
+StandardOutput=journal
 StandardError=journal
 
 [Install]
